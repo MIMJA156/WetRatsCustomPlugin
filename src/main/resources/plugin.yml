@@ -1,0 +1,6 @@
+name: Wet
+version: '${project.version}'
+main: me.mimja.wet.Wet
+api-version: 1.19
+authors: [ Mimja156 ]
+description: A custom plugin for wetrats server!
