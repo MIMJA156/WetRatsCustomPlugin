@@ -16,16 +16,13 @@ public class PlayerOnDeath implements Listener {
         Player player = event.getEntity().getPlayer();
         assert player != null;
 
-        event.setDeathMessage("oof, your kind bad ngl");
-        event.setNewLevel(100);
-
         PlayerDeathModel playerData = StorageTools.PlayerDeath.get(player.getUniqueId());
 
         if(playerData != null){
             PlayerDeathModel playerDeath = StorageTools.PlayerDeath.generate(player, playerData.getDeaths() + 1);
             StorageTools.PlayerDeath.update(playerDeath);
         }else{
-            PlayerDeathModel playerDeath = StorageTools.PlayerDeath.generate(player, 0);
+            PlayerDeathModel playerDeath = StorageTools.PlayerDeath.generate(player, 1);
             StorageTools.PlayerDeath.create(playerDeath);
         }
     }

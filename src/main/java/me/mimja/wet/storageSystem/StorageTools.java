@@ -1,9 +1,13 @@
 package me.mimja.wet.storageSystem;
+import com.google.gson.Gson;
+import me.mimja.wet.Wet;
 import me.mimja.wet.storageSystem.models.PlayerDeathModel;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
 public class StorageTools {
@@ -17,13 +21,20 @@ public class StorageTools {
 
         public static PlayerDeathModel create(PlayerDeathModel newDeath){
             playerDeathLocalStored.add(newDeath);
+
+            try {
+                save();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             return newDeath;
         }
 
         public static PlayerDeathModel get(UUID playerId){
-            for (PlayerDeathModel currentDeath : playerDeathLocalStored) {
-                if (currentDeath.getPlayerId().equals(playerId)) {
-                    return currentDeath;
+            for (PlayerDeathModel currentDeathModel : playerDeathLocalStored) {
+                if (currentDeathModel.getPlayerId().equals(playerId)) {
+                    return currentDeathModel;
                 }
             }
             return null;
@@ -36,14 +47,43 @@ public class StorageTools {
                     currentDeath.setDeathX(newDeath.getDeathX());
                     currentDeath.setDeathY(newDeath.getDeathY());
                     currentDeath.setDeathZ(newDeath.getDeathZ());
+
+                    try {
+                        save();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     return newDeath;
                 }
             }
             return null;
         }
 
-        private static void save(){
+        public static void load() throws IOException {
+            Gson gson = new Gson();
+            File file = new File(Wet.getPlugin().getDataFolder().getAbsolutePath() + "/PlayerDeathModelDB.json");
+            if (file.exists()){
+                Reader reader = new FileReader(file);
+                PlayerDeathModel[] n = gson.fromJson(reader, PlayerDeathModel[].class);
+                playerDeathLocalStored = new ArrayList<>(Arrays.asList(n));
+                reader.close();
+            }
+        }
 
+        private static void save() throws IOException {
+            Gson gson = new Gson();
+            File file = new File(Wet.getPlugin().getDataFolder().getAbsolutePath() + "/PlayerDeathModelDB.json");
+
+            if (!file.exists()){
+                file.getParentFile().mkdir();
+                file.createNewFile();
+            }
+
+            Writer writer = new FileWriter(file, false);
+            gson.toJson(playerDeathLocalStored, writer);
+            writer.flush();
+            writer.close();
         }
     }
 }
