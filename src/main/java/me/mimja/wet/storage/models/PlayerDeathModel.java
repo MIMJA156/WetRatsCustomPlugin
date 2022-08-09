@@ -1,17 +1,21 @@
-package me.mimja.wet.storageSystem.models;
+package me.mimja.wet.storage.models;
+
+import org.bukkit.World;
 
 import java.util.UUID;
 
 public class PlayerDeathModel {
     UUID playerId;
     Integer deaths;
+    String deathWorld;
     Double deathX;
     Double deathY;
     Double deathZ;
 
-    public PlayerDeathModel(UUID playerId, Integer deaths, Double deathX, Double deathY, Double deathZ) {
+    public PlayerDeathModel(UUID playerId, Integer deaths, String deathWorld, Double deathX, Double deathY, Double deathZ) {
         this.playerId = playerId;
         this.deaths = deaths;
+        this.deathWorld = deathWorld;
         this.deathX = deathX;
         this.deathY = deathY;
         this.deathZ = deathZ;
@@ -31,6 +35,14 @@ public class PlayerDeathModel {
 
     public void setDeaths(Integer deaths) {
         this.deaths = deaths;
+    }
+
+    public String getDeathWorld() {
+        return deathWorld;
+    }
+
+    public void setDeathWorld(String deathWorld) {
+        this.deathWorld = deathWorld;
     }
 
     public Double getDeathX() {

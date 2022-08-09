@@ -1,7 +1,7 @@
-package me.mimja.wet.storageSystem;
+package me.mimja.wet.storage;
 import com.google.gson.Gson;
 import me.mimja.wet.Wet;
-import me.mimja.wet.storageSystem.models.PlayerDeathModel;
+import me.mimja.wet.storage.models.PlayerDeathModel;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -16,7 +16,7 @@ public class StorageTools {
 
         public static PlayerDeathModel generate(Player player, Integer deaths) {
             Location playerLocation = player.getLocation();
-            return new PlayerDeathModel(player.getUniqueId(), deaths, playerLocation.getX(), playerLocation.getY(), playerLocation.getZ());
+            return new PlayerDeathModel(player.getUniqueId(), deaths, playerLocation.getWorld().getName(), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ());
         }
 
         public static PlayerDeathModel create(PlayerDeathModel newDeath){
@@ -66,7 +66,9 @@ public class StorageTools {
             if (file.exists()){
                 Reader reader = new FileReader(file);
                 PlayerDeathModel[] n = gson.fromJson(reader, PlayerDeathModel[].class);
-                playerDeathLocalStored = new ArrayList<>(Arrays.asList(n));
+                if(n != null){
+                    playerDeathLocalStored = new ArrayList<>(Arrays.asList(n));
+                }
                 reader.close();
             }
         }
