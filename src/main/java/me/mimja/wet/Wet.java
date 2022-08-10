@@ -2,9 +2,10 @@ package me.mimja.wet;
 
 import me.kodysimpson.simpapi.command.CommandManager;
 import me.mimja.wet.commands.ShowLivesLeftCommand;
+import me.mimja.wet.events.PlayerOnBlockPlace;
 import me.mimja.wet.events.PlayerOnDeath;
-import me.mimja.wet.events.PlayerOnJoin;
-import me.mimja.wet.events.PlayerOnReSpawn;
+import me.mimja.wet.events.PlayerOnItemMove;
+import me.mimja.wet.events.PlayerOnSpawn;
 import me.mimja.wet.storage.StorageTools;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -34,8 +35,9 @@ public final class Wet extends JavaPlugin {
         //Register Death Listener
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new PlayerOnDeath(this), this);
-        pm.registerEvents(new PlayerOnJoin(this), this);
-        pm.registerEvents(new PlayerOnReSpawn(this), this);
+        pm.registerEvents(new PlayerOnSpawn(this), this);
+        pm.registerEvents(new PlayerOnBlockPlace(this), this);
+        pm.registerEvents(new PlayerOnItemMove(this), this);
 
         //Register Commands
         try {

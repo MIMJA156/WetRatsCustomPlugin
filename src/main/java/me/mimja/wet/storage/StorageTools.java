@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
@@ -15,8 +16,7 @@ public class StorageTools {
         private static ArrayList<PlayerDeathModel> playerDeathLocalStored = new ArrayList<>();
 
         public static PlayerDeathModel generate(Player player, Integer deaths) {
-            Location playerLocation = player.getLocation();
-            return new PlayerDeathModel(player.getUniqueId(), deaths, playerLocation.getWorld().getName(), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ());
+            return new PlayerDeathModel(player.getUniqueId(), deaths);
         }
 
         public static PlayerDeathModel create(PlayerDeathModel newDeath){
@@ -43,10 +43,7 @@ public class StorageTools {
         public static PlayerDeathModel update(PlayerDeathModel newDeath){
             for (PlayerDeathModel currentDeath : playerDeathLocalStored) {
                 if (currentDeath.getPlayerId().equals(newDeath.getPlayerId())) {
-                    currentDeath.setDeaths(currentDeath.getDeaths() + 1);
-                    currentDeath.setDeathX(newDeath.getDeathX());
-                    currentDeath.setDeathY(newDeath.getDeathY());
-                    currentDeath.setDeathZ(newDeath.getDeathZ());
+                    currentDeath.setPlayerDeaths(newDeath.getPlayerDeaths());
 
                     try {
                         save();
@@ -70,17 +67,15 @@ public class StorageTools {
                     playerDeathLocalStored = new ArrayList<>(Arrays.asList(n));
                 }
                 reader.close();
+            }else{
+                file.getParentFile().mkdir();
+                file.createNewFile();
             }
         }
 
         private static void save() throws IOException {
             Gson gson = new Gson();
             File file = new File(Wet.getPlugin().getDataFolder().getAbsolutePath() + "/PlayerDeathModelDB.json");
-
-            if (!file.exists()){
-                file.getParentFile().mkdir();
-                file.createNewFile();
-            }
 
             Writer writer = new FileWriter(file, false);
             gson.toJson(playerDeathLocalStored, writer);
