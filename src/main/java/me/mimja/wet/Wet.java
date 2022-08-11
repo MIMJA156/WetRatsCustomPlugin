@@ -4,7 +4,7 @@ import me.kodysimpson.simpapi.command.CommandManager;
 import me.mimja.wet.commands.ShowLivesLeftCommand;
 import me.mimja.wet.events.PlayerOnBlockPlace;
 import me.mimja.wet.events.PlayerOnDeath;
-import me.mimja.wet.events.PlayerOnItemMove;
+import me.mimja.wet.events.onItemMove;
 import me.mimja.wet.events.PlayerOnSpawn;
 import me.mimja.wet.storage.StorageTools;
 import org.bukkit.plugin.Plugin;
@@ -37,7 +37,7 @@ public final class Wet extends JavaPlugin {
         pm.registerEvents(new PlayerOnDeath(this), this);
         pm.registerEvents(new PlayerOnSpawn(this), this);
         pm.registerEvents(new PlayerOnBlockPlace(this), this);
-        pm.registerEvents(new PlayerOnItemMove(this), this);
+        pm.registerEvents(new onItemMove(this), this);
 
         //Register Commands
         try {

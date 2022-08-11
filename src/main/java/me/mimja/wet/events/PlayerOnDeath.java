@@ -3,7 +3,6 @@ package me.mimja.wet.events;
 import me.mimja.wet.Wet;
 import me.mimja.wet.storage.StorageTools;
 import me.mimja.wet.storage.models.PlayerDeathModel;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -43,7 +42,7 @@ public class PlayerOnDeath implements Listener {
 
             block.getWorld().strikeLightningEffect(block.getLocation().add(.5,0,.5));
 
-            Bukkit.broadcastMessage(ChatColor.GOLD + player.getName() + " just died and became a ghost.");
+            event.setDeathMessage(event.getDeathMessage() + ChatColor.GOLD + " and is now a ghost.");
         }
     }
 }

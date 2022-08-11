@@ -6,7 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
@@ -16,7 +15,8 @@ public class StorageTools {
         private static ArrayList<PlayerDeathModel> playerDeathLocalStored = new ArrayList<>();
 
         public static PlayerDeathModel generate(Player player, Integer deaths) {
-            return new PlayerDeathModel(player.getUniqueId(), deaths);
+            Location loc = player.getLocation();
+            return new PlayerDeathModel(player.getUniqueId(), deaths, loc.getX(), loc.getY(), loc.getZ(), loc.getWorld().toString());
         }
 
         public static PlayerDeathModel create(PlayerDeathModel newDeath){

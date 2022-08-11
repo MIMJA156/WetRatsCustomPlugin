@@ -18,7 +18,7 @@ public class PlayerOnSpawn implements Listener {
     public void playerReSpawnEvent(PlayerRespawnEvent event){
         checkIfShouldBeInSurvival(event.getPlayer());
         checkIfShouldBeInSpectator(event.getPlayer());
-        event.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "You have " + StorageTools.PlayerDeath.get(event.getPlayer().getUniqueId()) + " lives left.");
+        event.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "You have " + (10 - StorageTools.PlayerDeath.get(event.getPlayer().getUniqueId()).getPlayerDeaths()) + " lives left.");
     }
 
     @EventHandler
