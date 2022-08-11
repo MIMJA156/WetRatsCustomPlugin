@@ -41,7 +41,8 @@ public final class Wet extends JavaPlugin {
 
         //Register Commands
         try {
-            CommandManager.createCoreCommand(this, "wet", "A plugin custom plugin made by Mimja156", "/wet", null, ShowLivesLeftCommand.class);
+            CommandManager.createCoreCommand(this, "wet", "A plugin custom plugin made by Mimja156", "/wet", null,
+                    ShowLivesLeftCommand.class);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }

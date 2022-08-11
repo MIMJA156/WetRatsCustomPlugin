@@ -16,7 +16,7 @@ public class StorageTools {
 
         public static PlayerDeathModel generate(Player player, Integer deaths) {
             Location loc = player.getLocation();
-            return new PlayerDeathModel(player.getUniqueId(), deaths, loc.getX(), loc.getY(), loc.getZ(), loc.getWorld().toString());
+            return new PlayerDeathModel(player.getUniqueId(), deaths, loc.getX(), loc.getY(), loc.getZ(), loc.getWorld().getName());
         }
 
         public static PlayerDeathModel create(PlayerDeathModel newDeath){

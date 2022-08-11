@@ -2,10 +2,7 @@ package me.mimja.wet.events;
 
 import me.mimja.wet.Wet;
 import me.mimja.wet.storage.StorageTools;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
 import org.bukkit.event.EventHandler;
@@ -24,7 +21,12 @@ public class PlayerOnBlockPlace implements Listener {
             OfflinePlayer revivedPlayer = skull.getOwningPlayer();
 
             if(revivedPlayer == null) return;
-            if(StorageTools.PlayerDeath.get(revivedPlayer.getPlayer().getUniqueId()).getPlayerDeaths() < 10) block.setType(Material.AIR);
+            if(StorageTools.PlayerDeath.get(revivedPlayer.getPlayer().getUniqueId()).getPlayerDeaths() < 10) {
+                event.setCancelled(true);
+                event.getBlock().setType(Material.AIR);
+                event.getPlayer().getInventory().remove(event.getPlayer().getInventory().getItemInMainHand());
+                Bukkit.broadcastMessage(event.getPlayer().getInventory().getItemInMainHand().getItemMeta().toString());
+            }
 
             Location headLocation = block.getLocation();
             if(headLocation.clone().add(0, -1, 0).getBlock().getType().equals(Material.LAPIS_BLOCK)

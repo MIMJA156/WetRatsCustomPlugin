@@ -6,12 +6,14 @@ import me.mimja.wet.storage.models.PlayerDeathModel;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.persistence.PersistentDataType;
 
 public class PlayerOnDeath implements Listener {
     public PlayerOnDeath(Wet wet) {}
@@ -39,6 +41,8 @@ public class PlayerOnDeath implements Listener {
             Skull skull = (Skull) block.getState();
             skull.setOwningPlayer(event.getEntity().getPlayer());
             skull.update(true);
+
+            skull.getPersistentDataContainer().set(new NamespacedKey(Wet.getPlugin(), "ThisIsCool"), PersistentDataType.STRING, "Elin is a very cool person.");
 
             block.getWorld().strikeLightningEffect(block.getLocation().add(.5,0,.5));
 
