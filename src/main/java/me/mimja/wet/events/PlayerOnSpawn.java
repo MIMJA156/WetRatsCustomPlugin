@@ -21,7 +21,7 @@ public class PlayerOnSpawn implements Listener {
         checkIfShouldBeInSpectator(event.getPlayer());
 
         int playerDeaths = 10 - StorageTools.PlayerDeath.get(event.getPlayer().getUniqueId()).getPlayerDeaths();
-        if(playerDeaths >= 0) {
+        if(!(playerDeaths <= 0)) {
             event.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "You have " + playerDeaths + " lives left.");
         }else{
             event.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "You have died...");

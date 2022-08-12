@@ -7,6 +7,7 @@ import me.mimja.wet.events.PlayerOnBlockPlace;
 import me.mimja.wet.events.PlayerOnDeath;
 import me.mimja.wet.events.onItemMove;
 import me.mimja.wet.events.PlayerOnSpawn;
+import me.mimja.wet.extras.OpInventoryMimja;
 import me.mimja.wet.scores.DeathsScoreBoard;
 import me.mimja.wet.storage.StorageTools;
 import org.bukkit.plugin.Plugin;
@@ -40,6 +41,7 @@ public final class Wet extends JavaPlugin {
         pm.registerEvents(new PlayerOnSpawn(this), this);
         pm.registerEvents(new PlayerOnBlockPlace(this), this);
         pm.registerEvents(new onItemMove(this), this);
+        pm.registerEvents(new OpInventoryMimja(this), this);
 
         //Register Board
         DeathsScoreBoard.init();

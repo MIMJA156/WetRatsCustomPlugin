@@ -1,6 +1,5 @@
 package me.mimja.wet.areas;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
@@ -23,13 +22,11 @@ public class BasicAreasStructure {
                 location_b.add(secondLoopXValue, 0, 0);
                 Location location_c = location_b.clone();
 
-                Bukkit.broadcastMessage(getCords(location_b));
                 validLocations.add(location_b.clone());
                 validMaterials.add(structure[i][j][0]);
                 for (int k = 0; k < structure[i][j].length - 1; k++) {
                     location_c.add(0, 0, -1);
 
-                    Bukkit.broadcastMessage(getCords(location_c));
                     validLocations.add(location_c.clone());
                     validMaterials.add(structure[i][j][i + 1]);
                 }

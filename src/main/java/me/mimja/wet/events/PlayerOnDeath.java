@@ -39,7 +39,6 @@ public class PlayerOnDeath implements Listener {
             skull.setOwningPlayer(event.getEntity().getPlayer());
             skull.update(true);
 
-
             block.getWorld().strikeLightningEffect(block.getLocation().add(.5,0,.5));
             event.setDeathMessage(event.getDeathMessage() + ChatColor.GOLD + " and is now a ghost.");
         }
