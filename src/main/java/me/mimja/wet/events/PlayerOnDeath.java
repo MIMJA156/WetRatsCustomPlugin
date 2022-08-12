@@ -20,6 +20,7 @@ public class PlayerOnDeath implements Listener {
     public void playerDeathEvent(PlayerDeathEvent event){
         Player player = event.getEntity().getPlayer();
         assert player != null;
+
         PlayerDeathModel playerData = StorageTools.PlayerDeath.get(player.getUniqueId());
         if(playerData != null){
             PlayerDeathModel playerDeath = StorageTools.PlayerDeath.generate(player, playerData.getPlayerDeaths() + 1);
@@ -31,7 +32,6 @@ public class PlayerOnDeath implements Listener {
 
         if(playerData != null && !player.getGameMode().equals(GameMode.SPECTATOR) && playerData.getPlayerDeaths() >= 10){
             player.setGameMode(GameMode.SPECTATOR);
-
             Block block = player.getLocation().getBlock();
 
             block.setType(Material.PLAYER_HEAD);
