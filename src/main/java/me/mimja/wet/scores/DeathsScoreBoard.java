@@ -18,7 +18,7 @@ public class DeathsScoreBoard {
             int playerDeaths;
 
             if(playerDeathModel != null){
-                playerDeaths = playerDeathModel.getPlayerDeaths() - 10;
+                playerDeaths = 10 - playerDeathModel.getPlayerDeaths();
             }else{
                 playerDeaths = 10;
             }
