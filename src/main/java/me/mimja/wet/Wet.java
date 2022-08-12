@@ -1,7 +1,6 @@
 package me.mimja.wet;
 
 import me.kodysimpson.simpapi.command.CommandManager;
-import me.mimja.wet.commands.GetPlayerHeadCommand;
 import me.mimja.wet.commands.ShowLivesLeftCommand;
 import me.mimja.wet.events.PlayerOnBlockPlace;
 import me.mimja.wet.events.PlayerOnDeath;
@@ -46,9 +45,7 @@ public final class Wet extends JavaPlugin {
 
         //Register Commands
         try {
-            CommandManager.createCoreCommand(this, "wet", "A plugin custom plugin made by Mimja156", "/wet", null,
-                    ShowLivesLeftCommand.class,
-                    GetPlayerHeadCommand.class);
+            CommandManager.createCoreCommand(this, "wet", "A plugin custom plugin made by Mimja156", "/wet", null, ShowLivesLeftCommand.class);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }

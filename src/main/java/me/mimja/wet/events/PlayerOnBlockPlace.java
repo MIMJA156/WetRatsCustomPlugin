@@ -48,22 +48,17 @@ public class PlayerOnBlockPlace implements Listener {
 
             if(validSummonArea){
                 StorageTools.PlayerDeath.update(StorageTools.PlayerDeath.generate(revivedPlayer.getPlayer(), 0));
+                DeathsScoreBoard.update(revivedPlayer.getPlayer(), 10 - StorageTools.PlayerDeath.get(revivedPlayer.getPlayer().getUniqueId()).getPlayerDeaths());
                 headLocation.getWorld().strikeLightningEffect(headLocation.add(.5,0,.5));
 
-                headLocation.getBlock().setType(Material.AIR);
                 validLocations.forEach(location -> {
-                    location.getBlock().setType(Material.AIR);
+                    if(location != null){
+                        location.getBlock().setType(Material.AIR);
+                    }
                 });
 
                 revivedPlayer.getPlayer().teleport(headLocation);
                 PlayerOnSpawn.checkIfShouldBeInSurvival(revivedPlayer.getPlayer());
-
-                try {
-                    Thread.sleep(100);
-                    DeathsScoreBoard.update(revivedPlayer.getPlayer(), 10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }else{
                 event.getPlayer().sendMessage(ChatColor.RED + "Invalid summon area!");
             }

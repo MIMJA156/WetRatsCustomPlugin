@@ -37,7 +37,7 @@ public class ShowLivesLeftCommand extends SubCommand {
 
     @Override
     public void perform(CommandSender sender, String[] args) {
-        Player player = (Player) sender;
+        Player player = (Player)sender;
 
         if(args.length >= 2){
             Player p;
@@ -80,6 +80,7 @@ public class ShowLivesLeftCommand extends SubCommand {
         Bukkit.getServer().getOnlinePlayers().forEach(p -> {
             list.add(p.getName());
         });
+        list.remove(player.getName());
         return list;
     }
 }

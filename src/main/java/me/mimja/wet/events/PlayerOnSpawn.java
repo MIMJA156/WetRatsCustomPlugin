@@ -16,25 +16,18 @@ public class PlayerOnSpawn implements Listener {
     public PlayerOnSpawn(Wet wet) {}
 
     @EventHandler
-    public void playerReSpawnEvent(PlayerRespawnEvent event) {
+    public void playerReSpawnEvent(PlayerRespawnEvent event){
         checkIfShouldBeInSurvival(event.getPlayer());
         checkIfShouldBeInSpectator(event.getPlayer());
-
-        int playerDeaths = 10 - StorageTools.PlayerDeath.get(event.getPlayer().getUniqueId()).getPlayerDeaths();
-        if(playerDeaths >= 0) {
-            event.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "You have " + playerDeaths + " lives left.");
-        }else{
-            event.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "You have died...");
-        }
-
-        DeathsScoreBoard.update(event.getPlayer(), playerDeaths);
+        event.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "You have " + (10 - StorageTools.PlayerDeath.get(event.getPlayer().getUniqueId()).getPlayerDeaths()) + " lives left.");
+        DeathsScoreBoard.update(event.getPlayer(), 10 - StorageTools.PlayerDeath.get(event.getPlayer().getUniqueId()).getPlayerDeaths());
     }
 
     @EventHandler
     public void playerJoinEvent(PlayerJoinEvent event){
         checkIfShouldBeInSurvival(event.getPlayer());
         checkIfShouldBeInSpectator(event.getPlayer());
-        DeathsScoreBoard.init();
+        DeathsScoreBoard.update(event.getPlayer(),  10 - StorageTools.PlayerDeath.get(event.getPlayer().getUniqueId()).getPlayerDeaths());
     }
 
     public static void checkIfShouldBeInSurvival(Player player){
