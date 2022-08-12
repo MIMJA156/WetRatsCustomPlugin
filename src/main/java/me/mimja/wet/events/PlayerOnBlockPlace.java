@@ -1,6 +1,9 @@
 package me.mimja.wet.events;
 
 import me.mimja.wet.Wet;
+import me.mimja.wet.areas.AreasModel;
+import me.mimja.wet.areas.Necromancy;
+import me.mimja.wet.scores.DeathsScoreBoard;
 import me.mimja.wet.storage.StorageTools;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -8,6 +11,8 @@ import org.bukkit.block.Skull;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+
+import java.util.ArrayList;
 
 public class PlayerOnBlockPlace implements Listener {
     public PlayerOnBlockPlace(Wet wet) {}
@@ -29,31 +34,28 @@ public class PlayerOnBlockPlace implements Listener {
             }
 
             Location headLocation = block.getLocation();
-            if(headLocation.clone().add(0, -1, 0).getBlock().getType().equals(Material.LAPIS_BLOCK)
-                    && headLocation.clone().add(0, -2, 0).getBlock().getType().equals(Material.IRON_BLOCK)
-                    && headLocation.clone().add(1, -2, 0).getBlock().getType().equals(Material.DIAMOND_BLOCK)
-                    && headLocation.clone().add(-1, -2, 0).getBlock().getType().equals(Material.DIAMOND_BLOCK)
-                    && headLocation.clone().add(0, -2, 1).getBlock().getType().equals(Material.DIAMOND_BLOCK)
-                    && headLocation.clone().add(0, -2, -1).getBlock().getType().equals(Material.DIAMOND_BLOCK)
-                    && headLocation.clone().add(-1, -2, 1).getBlock().getType().equals(Material.GOLD_BLOCK)
-                    && headLocation.clone().add(1, -2, -1).getBlock().getType().equals(Material.GOLD_BLOCK)
-                    && headLocation.clone().add(-1, -2, -1).getBlock().getType().equals(Material.GOLD_BLOCK)
-                    && headLocation.clone().add(1, -2, 1).getBlock().getType().equals(Material.GOLD_BLOCK)){
 
+            boolean validSummonArea = false;
+            AreasModel areasModel = new Necromancy().render(headLocation);
+
+            ArrayList<Location> validLocations = areasModel.getValidLocations();
+            ArrayList<Material> validMaterials = areasModel.getValidMaterials();
+
+
+            for (int i = 0; i < validLocations.size(); i++) {
+                validSummonArea = validLocations.get(i).getBlock().getType().equals(validMaterials.get(i));
+            }
+
+            if(validSummonArea){
                 StorageTools.PlayerDeath.update(StorageTools.PlayerDeath.generate(revivedPlayer.getPlayer(), 0));
-
+                DeathsScoreBoard.update(revivedPlayer.getPlayer(), 10 - StorageTools.PlayerDeath.get(revivedPlayer.getPlayer().getUniqueId()).getPlayerDeaths());
                 headLocation.getWorld().strikeLightningEffect(headLocation.add(.5,0,.5));
-                headLocation.getBlock().setType(Material.AIR);
-                headLocation.clone().add(0, -1, 0).getBlock().setType(Material.AIR);
-                headLocation.clone().add(0, -2, 0).getBlock().setType(Material.AIR);
-                headLocation.clone().add(1, -2, 0).getBlock().setType(Material.AIR);
-                headLocation.clone().add(-1, -2, 0).getBlock().setType(Material.AIR);
-                headLocation.clone().add(0, -2, 1).getBlock().setType(Material.AIR);
-                headLocation.clone().add(0, -2, -1).getBlock().setType(Material.AIR);
-                headLocation.clone().add(1, -2, 1).getBlock().setType(Material.AIR);
-                headLocation.clone().add(-1, -2, -1).getBlock().setType(Material.AIR);
-                headLocation.clone().add(-1, -2, 1).getBlock().setType(Material.AIR);
-                headLocation.clone().add(1, -2, -1).getBlock().setType(Material.AIR);
+
+                validLocations.forEach(location -> {
+                    if(location != null){
+                        location.getBlock().setType(Material.AIR);
+                    }
+                });
 
                 revivedPlayer.getPlayer().teleport(headLocation);
                 PlayerOnSpawn.checkIfShouldBeInSurvival(revivedPlayer.getPlayer());

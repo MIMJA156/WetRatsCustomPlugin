@@ -6,6 +6,7 @@ import me.mimja.wet.events.PlayerOnBlockPlace;
 import me.mimja.wet.events.PlayerOnDeath;
 import me.mimja.wet.events.onItemMove;
 import me.mimja.wet.events.PlayerOnSpawn;
+import me.mimja.wet.scores.DeathsScoreBoard;
 import me.mimja.wet.storage.StorageTools;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -39,10 +40,12 @@ public final class Wet extends JavaPlugin {
         pm.registerEvents(new PlayerOnBlockPlace(this), this);
         pm.registerEvents(new onItemMove(this), this);
 
+        //Register Board
+        DeathsScoreBoard.init();
+
         //Register Commands
         try {
-            CommandManager.createCoreCommand(this, "wet", "A plugin custom plugin made by Mimja156", "/wet", null,
-                    ShowLivesLeftCommand.class);
+            CommandManager.createCoreCommand(this, "wet", "A plugin custom plugin made by Mimja156", "/wet", null, ShowLivesLeftCommand.class);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }

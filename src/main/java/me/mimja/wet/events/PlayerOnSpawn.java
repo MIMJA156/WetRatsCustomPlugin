@@ -1,6 +1,7 @@
 package me.mimja.wet.events;
 
 import me.mimja.wet.Wet;
+import me.mimja.wet.scores.DeathsScoreBoard;
 import me.mimja.wet.storage.StorageTools;
 import me.mimja.wet.storage.models.PlayerDeathModel;
 import org.bukkit.ChatColor;
@@ -19,12 +20,14 @@ public class PlayerOnSpawn implements Listener {
         checkIfShouldBeInSurvival(event.getPlayer());
         checkIfShouldBeInSpectator(event.getPlayer());
         event.getPlayer().sendMessage(ChatColor.DARK_PURPLE + "You have " + (10 - StorageTools.PlayerDeath.get(event.getPlayer().getUniqueId()).getPlayerDeaths()) + " lives left.");
+        DeathsScoreBoard.update(event.getPlayer(), 10 - StorageTools.PlayerDeath.get(event.getPlayer().getUniqueId()).getPlayerDeaths());
     }
 
     @EventHandler
     public void playerJoinEvent(PlayerJoinEvent event){
         checkIfShouldBeInSurvival(event.getPlayer());
         checkIfShouldBeInSpectator(event.getPlayer());
+        DeathsScoreBoard.update(event.getPlayer(),  10 - StorageTools.PlayerDeath.get(event.getPlayer().getUniqueId()).getPlayerDeaths());
     }
 
     public static void checkIfShouldBeInSurvival(Player player){

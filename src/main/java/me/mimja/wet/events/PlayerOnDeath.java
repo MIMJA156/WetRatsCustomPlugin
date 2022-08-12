@@ -6,14 +6,12 @@ import me.mimja.wet.storage.models.PlayerDeathModel;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.persistence.PersistentDataType;
 
 public class PlayerOnDeath implements Listener {
     public PlayerOnDeath(Wet wet) {}
@@ -31,22 +29,24 @@ public class PlayerOnDeath implements Listener {
             StorageTools.PlayerDeath.create(playerDeath);
         }
 
-        PlayerDeathModel data = StorageTools.PlayerDeath.get(player.getUniqueId());
-        if(data != null && !player.getGameMode().equals(GameMode.SPECTATOR) && data.getPlayerDeaths() >= 10){
+        if(playerData != null && !player.getGameMode().equals(GameMode.SPECTATOR) && playerData.getPlayerDeaths() >= 10){
             player.setGameMode(GameMode.SPECTATOR);
 
             Block block = player.getLocation().getBlock();
-            block.setType(Material.PLAYER_HEAD);
 
+            block.setType(Material.PLAYER_HEAD);
             Skull skull = (Skull) block.getState();
             skull.setOwningPlayer(event.getEntity().getPlayer());
             skull.update(true);
 
-            skull.getPersistentDataContainer().set(new NamespacedKey(Wet.getPlugin(), "ThisIsCool"), PersistentDataType.STRING, "Elin is a very cool person.");
 
             block.getWorld().strikeLightningEffect(block.getLocation().add(.5,0,.5));
-
             event.setDeathMessage(event.getDeathMessage() + ChatColor.GOLD + " and is now a ghost.");
         }
     }
 }
+
+//            ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
+//            SkullMeta meta = (SkullMeta) skull.getItemMeta();
+//            meta.setOwningPlayer(event.getEntity().getPlayer());
+//            skull.setItemMeta(meta);
