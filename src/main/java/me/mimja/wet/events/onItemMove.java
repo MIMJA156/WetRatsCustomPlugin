@@ -15,19 +15,21 @@ public class onItemMove implements Listener {
 
     @EventHandler
     public void playerItemMoved(InventoryClickEvent event){
-        if(event.getCurrentItem().getType().equals(Material.PLAYER_HEAD)){
-            if(event.getInventory().getType().equals(InventoryType.ENDER_CHEST)){
-                event.setCancelled(true);
-            }
-        }else{
-            ItemStack currentItem = event.getCurrentItem();
-            if(currentItem.getItemMeta() instanceof BlockStateMeta){
-                BlockStateMeta im = (BlockStateMeta) currentItem.getItemMeta();
-                if(im.getBlockState() instanceof ShulkerBox){
-                    ShulkerBox shulker = (ShulkerBox) im.getBlockState();
-                    if(shulker.getInventory().contains(Material.PLAYER_HEAD)){
-                        if(event.getInventory().getType().equals(InventoryType.ENDER_CHEST)){
-                            event.setCancelled(true);
+        if(event.getCurrentItem() != null){
+            if(event.getCurrentItem().getType().equals(Material.PLAYER_HEAD)){
+                if(event.getInventory().getType().equals(InventoryType.ENDER_CHEST)){
+                    event.setCancelled(true);
+                }
+            }else{
+                ItemStack currentItem = event.getCurrentItem();
+                if(currentItem.getItemMeta() instanceof BlockStateMeta){
+                    BlockStateMeta im = (BlockStateMeta) currentItem.getItemMeta();
+                    if(im.getBlockState() instanceof ShulkerBox){
+                        ShulkerBox shulker = (ShulkerBox) im.getBlockState();
+                        if(shulker.getInventory().contains(Material.PLAYER_HEAD)){
+                            if(event.getInventory().getType().equals(InventoryType.ENDER_CHEST)){
+                                event.setCancelled(true);
+                            }
                         }
                     }
                 }

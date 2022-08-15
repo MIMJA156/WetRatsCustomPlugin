@@ -3,15 +3,19 @@ package me.mimja.wet.events;
 import me.mimja.wet.Wet;
 import me.mimja.wet.storage.StorageTools;
 import me.mimja.wet.storage.models.PlayerDeathModel;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 public class PlayerOnDeath implements Listener {
     public PlayerOnDeath(Wet wet) {}
@@ -20,6 +24,21 @@ public class PlayerOnDeath implements Listener {
     public void playerDeathEvent(PlayerDeathEvent event){
         Player player = event.getEntity().getPlayer();
         assert player != null;
+
+        PlayerInventory drops = player.getInventory();
+
+        if(drops.contains(Material.PLAYER_HEAD)){
+            Bukkit.broadcastMessage("cool");
+            for (int i = 0; i < drops.getSize(); i++) {
+                ItemStack itemInSlot = drops.getItem(i);
+                if(itemInSlot != null && itemInSlot.getType().equals(Material.PLAYER_HEAD)){
+                    Item itemDropped = Bukkit.getWorld(player.getWorld().getUID()).dropItemNaturally(player.getLocation(), itemInSlot);
+                    itemDropped.setInvulnerable(true);
+                    itemDropped.setUnlimitedLifetime(true);
+                    event.getDrops().remove(i);
+                }
+            }
+        }
 
         PlayerDeathModel playerData = StorageTools.PlayerDeath.get(player.getUniqueId());
         if(playerData != null){
@@ -44,8 +63,3 @@ public class PlayerOnDeath implements Listener {
         }
     }
 }
-
-//            ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
-//            SkullMeta meta = (SkullMeta) skull.getItemMeta();
-//            meta.setOwningPlayer(event.getEntity().getPlayer());
-//            skull.setItemMeta(meta);

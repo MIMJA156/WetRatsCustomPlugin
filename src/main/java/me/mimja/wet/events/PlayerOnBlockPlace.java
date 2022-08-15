@@ -26,12 +26,8 @@ public class PlayerOnBlockPlace implements Listener {
             OfflinePlayer revivedPlayer = skull.getOwningPlayer();
 
             if(revivedPlayer == null) return;
-            if(StorageTools.PlayerDeath.get(revivedPlayer.getPlayer().getUniqueId()).getPlayerDeaths() < 10) {
-                event.setCancelled(true);
-                event.getBlock().setType(Material.AIR);
-                event.getPlayer().getInventory().remove(event.getPlayer().getInventory().getItemInMainHand());
-                Bukkit.broadcastMessage(event.getPlayer().getInventory().getItemInMainHand().getItemMeta().toString());
-            }
+            Integer playerDeaths = StorageTools.PlayerDeath.get(revivedPlayer.getUniqueId()).getPlayerDeaths();
+            if(playerDeaths < 10) return;
 
             Location headLocation = block.getLocation();
 
@@ -40,7 +36,6 @@ public class PlayerOnBlockPlace implements Listener {
 
             ArrayList<Location> validLocations = areasModel.getValidLocations();
             ArrayList<Material> validMaterials = areasModel.getValidMaterials();
-
 
             for (int i = 0; i < validLocations.size(); i++) {
                 validSummonArea = validLocations.get(i).getBlock().getType().equals(validMaterials.get(i));
@@ -52,7 +47,7 @@ public class PlayerOnBlockPlace implements Listener {
 
                 headLocation.getBlock().setType(Material.AIR);
                 validLocations.forEach(location -> {
-                    location.getBlock().setType(Material.AIR);
+                    if(!location.getBlock().getType().equals(Material.AIR)) location.getBlock().setType(Material.AIR);
                 });
 
                 revivedPlayer.getPlayer().teleport(headLocation);

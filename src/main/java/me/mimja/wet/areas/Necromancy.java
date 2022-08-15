@@ -3,7 +3,11 @@ package me.mimja.wet.areas;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
-public class Necromancy extends BasicAreasStructure{
+public class Necromancy extends AreaMapRenderer {
+    static Integer XOffset = -1;
+    static Integer YOffset = -1;
+    static Integer ZOffset = 1;
+
     static Material[][][] structure = {
             {
                     {null, null, null},
@@ -18,11 +22,7 @@ public class Necromancy extends BasicAreasStructure{
             }
     };
 
-    public static Material[][][] getStructure() {
-        return structure;
-    }
-
     public AreasModel render(Location location){
-        return structureReader(structure, location);
+        return structureReader(structure, XOffset, YOffset, ZOffset, location);
     }
 }

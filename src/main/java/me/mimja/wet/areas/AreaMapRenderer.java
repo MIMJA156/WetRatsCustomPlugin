@@ -5,14 +5,16 @@ import org.bukkit.Material;
 
 import java.util.ArrayList;
 
-public class BasicAreasStructure {
-    public AreasModel structureReader(Material[][][] structure, Location headLocation){
+public class AreaMapRenderer {
+    public AreasModel structureReader(Material[][][] structure, int XOffset, int YOffset, int ZOffset, Location headLocation){
         ArrayList<Location> validLocations = new ArrayList<Location>();
         ArrayList<Material> validMaterials = new ArrayList<Material>();
 
+        if(YOffset < 0) YOffset = YOffset * -1;
+
         for (int i = 0; i < structure.length; i++) {
             Location location_a = headLocation.clone();
-            location_a.add(-1, (i + 1) * -1, 1);
+            location_a.add(XOffset, (i + YOffset) * -1, ZOffset);
             Location location_b = location_a.clone();
 
             for (int j = 0; j < structure[i].length; j++) {

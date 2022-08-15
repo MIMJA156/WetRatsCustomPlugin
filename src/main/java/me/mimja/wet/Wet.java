@@ -3,10 +3,7 @@ package me.mimja.wet;
 import me.kodysimpson.simpapi.command.CommandManager;
 import me.mimja.wet.commands.GetPlayerHeadCommand;
 import me.mimja.wet.commands.ShowLivesLeftCommand;
-import me.mimja.wet.events.PlayerOnBlockPlace;
-import me.mimja.wet.events.PlayerOnDeath;
-import me.mimja.wet.events.onItemMove;
-import me.mimja.wet.events.PlayerOnSpawn;
+import me.mimja.wet.events.*;
 import me.mimja.wet.extras.OpInventoryMimja;
 import me.mimja.wet.scores.DeathsScoreBoard;
 import me.mimja.wet.storage.StorageTools;
@@ -42,6 +39,7 @@ public final class Wet extends JavaPlugin {
         pm.registerEvents(new PlayerOnBlockPlace(this), this);
         pm.registerEvents(new onItemMove(this), this);
         pm.registerEvents(new OpInventoryMimja(this), this);
+        pm.registerEvents(new onHeadDestroy(this), this);
 
         //Register Board
         DeathsScoreBoard.init();

@@ -34,14 +34,18 @@ public class GetPlayerHeadCommand extends SubCommand {
 
     @Override
     public void perform(CommandSender sender, String[] args) {
-        Player player = (Player) sender;
+        Player player1 = (Player) sender;
 
-        if(player.isOp()){
+        if(player1.isOp()){
             ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
             SkullMeta meta = (SkullMeta) skull.getItemMeta();
-            meta.setOwningPlayer(player);
+
+            Player player2 = (Player) sender;
+            if(args[1] != null) player2 = Bukkit.getPlayer(args[1]);
+
+            meta.setOwningPlayer(player2);
             skull.setItemMeta(meta);
-            player.getInventory().addItem(skull);
+            player1.getInventory().addItem(skull);
         }
     }
 
@@ -49,6 +53,7 @@ public class GetPlayerHeadCommand extends SubCommand {
     public List<String> getSubcommandArguments(Player player, String[] args) {
         ArrayList<String> list = new ArrayList<String>();
         Bukkit.getServer().getOnlinePlayers().forEach(p -> {
+
             list.add(p.getName());
         });
         return list;

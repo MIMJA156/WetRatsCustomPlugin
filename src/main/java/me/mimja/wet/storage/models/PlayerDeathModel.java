@@ -7,15 +7,16 @@ public class PlayerDeathModel extends BasicDataModel {
     Double x;
     Double y;
     Double z;
+    UUID worldId;
     String world;
 
-    public PlayerDeathModel(UUID playerId, Integer playerDeaths, Double x, Double y, Double z, String world) {
+    public PlayerDeathModel(UUID playerId, Integer playerDeaths, Double x, Double y, Double z, UUID worldId) {
         super(playerId);
         this.playerDeaths = playerDeaths;
         this.x = x;
         this.y = y;
         this.z = z;
-        this.world = world;
+        this.worldId = worldId;
     }
 
     public Integer getPlayerDeaths() {
@@ -50,11 +51,15 @@ public class PlayerDeathModel extends BasicDataModel {
         this.z = z;
     }
 
-    public String getWorld() {
-        return world;
+    public UUID getWorldId() {
+        return worldId;
     }
 
-    public void setWorld(String world) {
-        this.world = world;
+    public void setWorldId(UUID worldId) {
+        this.worldId = worldId;
+    }
+
+    public String getWorld() {
+        return world;
     }
 }
