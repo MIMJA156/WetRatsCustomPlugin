@@ -1,7 +1,7 @@
 package me.mimja.wet.events;
 
 import me.mimja.wet.Wet;
-import me.mimja.wet.scores.DeathsScoreBoard;
+import me.mimja.wet.DeathsScoreBoard;
 import me.mimja.wet.storage.StorageTools;
 import me.mimja.wet.storage.models.PlayerDeathModel;
 import org.bukkit.ChatColor;

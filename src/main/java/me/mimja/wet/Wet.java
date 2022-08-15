@@ -5,7 +5,6 @@ import me.mimja.wet.commands.GetPlayerHeadCommand;
 import me.mimja.wet.commands.ShowLivesLeftCommand;
 import me.mimja.wet.events.*;
 import me.mimja.wet.extras.OpInventoryMimja;
-import me.mimja.wet.scores.DeathsScoreBoard;
 import me.mimja.wet.storage.StorageTools;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;

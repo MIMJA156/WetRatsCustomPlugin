@@ -1,4 +1,4 @@
-package me.mimja.wet.scores;
+package me.mimja.wet;
 
 import me.mimja.wet.storage.StorageTools;
 import me.mimja.wet.storage.models.PlayerDeathModel;

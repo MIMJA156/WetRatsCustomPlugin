@@ -38,8 +38,6 @@ public class onHeadDestroy implements Listener {
                 public void run() {
                     if(droppedItems.contains(item)){
                         item.setTicksLived(5 * 1000 * 60 + 2);
-
-                        Bukkit.broadcastMessage(hasAvailableSlot(player) + "");
                         if(hasAvailableSlot(player)){
                             player.getInventory().addItem(item.getItemStack());
                             player.sendMessage(ChatColor.GREEN + "Player head returned!");
@@ -48,7 +46,7 @@ public class onHeadDestroy implements Listener {
                             World world = Bukkit.getWorld(playerDeathModel.getWorldId());
                             Location deathLocation = new Location(world, playerDeathModel.getX(), playerDeathModel.getY(), playerDeathModel.getZ());
 
-                            deathLocation.getBlock().setType(Material.PLAYER_HEAD);
+                            deathLocation.getBlock().setType(Material.OAK_LOG);
                         }
                     }
                 }

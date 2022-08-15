@@ -3,7 +3,7 @@ package me.mimja.wet.events;
 import me.mimja.wet.Wet;
 import me.mimja.wet.areas.AreasModel;
 import me.mimja.wet.areas.Necromancy;
-import me.mimja.wet.scores.DeathsScoreBoard;
+import me.mimja.wet.DeathsScoreBoard;
 import me.mimja.wet.storage.StorageTools;
 import org.bukkit.*;
 import org.bukkit.block.Block;
